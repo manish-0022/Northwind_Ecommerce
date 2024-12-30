@@ -1,8 +1,5 @@
 package com.Northwind.Ecommerce.dto;
 
-import com.Northwind.Ecommerce.entity.Address;
-import com.Northwind.Ecommerce.entity.orderItems;
-import com.Northwind.Ecommerce.enums.userRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

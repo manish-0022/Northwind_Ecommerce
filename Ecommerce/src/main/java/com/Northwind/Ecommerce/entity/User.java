@@ -1,14 +1,10 @@
 package com.Northwind.Ecommerce.entity;
 
 
-import com.Northwind.Ecommerce.enums.userRole;
+import com.Northwind.Ecommerce.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +19,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank(message = "name is required")
     private String name;
@@ -39,14 +35,14 @@ public class User {
     @NotBlank(message = "phone number is required")
     private String phoneNumber;
 
-    private userRole role;
+    private UserRole role;
 
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Address address;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<orderItems> orderItemsList;
+    private List<OrderItem> orderItemsList;
 
     @Column(name = "created_at")
     private final LocalDateTime createdAt = LocalDateTime.now();

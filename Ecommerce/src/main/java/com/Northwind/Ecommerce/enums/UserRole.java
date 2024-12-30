@@ -1,5 +1,5 @@
 package com.Northwind.Ecommerce.enums;
 
-public enum userRole {
+public enum UserRole {
     ADMIN, USER
 }

@@ -19,7 +19,7 @@ public class Order {
     private BigDecimal totalPrice;
 
     @OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<orderItems> orderItemsList;
+    private List<OrderItem> orderItemsList;
 
     @Column(name = "created_at")
     private final LocalDateTime createdAt = LocalDateTime.now();

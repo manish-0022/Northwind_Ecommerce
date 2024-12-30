@@ -4,11 +4,13 @@ import com.Northwind.Ecommerce.dto.*;
 import com.Northwind.Ecommerce.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class EntityDtoMapper {
 
-    //user entity to user dto basic
-
+    //user entity to user dto
+    
     public UserDto mapUserToDto(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -19,7 +21,7 @@ public class EntityDtoMapper {
         return userDto;
     }
 
-    //Address to Dto basic
+    //Address to Dto
 
     public AddressDto mapAddressToDto(Address address){
         AddressDto addressDto = new AddressDto();
@@ -31,7 +33,7 @@ public class EntityDtoMapper {
         return addressDto;
     }
 
-    //Category to Dto basic
+    //Category to Dto
 
     public CategoryDto mapCategoryToDto(Category category){
         CategoryDto categoryDto = new CategoryDto();
@@ -40,7 +42,7 @@ public class EntityDtoMapper {
         return categoryDto;
     }
 
-    //OrderItem to Dto basic
+    //OrderItem to Dto
     public OrderItemDto mapOrderItemToDto(OrderItem orderItem){
         OrderItemDto orderItemDto = new OrderItemDto();
         orderItemDto.setId(orderItem.getId());
@@ -51,7 +53,7 @@ public class EntityDtoMapper {
         return orderItemDto;
     }
 
-    //Product to Dto basic
+    //Product to Dto
     public ProductDto mapProductToDto(Product product){
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
@@ -84,10 +86,29 @@ public class EntityDtoMapper {
         return orderItemDto;
     }
 
+    //orderItem to dto plus product and user
 
+    public OrderItemDto mapOrderItemToDtoPlusProductAndUser(OrderItem orderItem){
+        OrderItemDto orderItemDto = mapOrderItemToDtoPlusProduct(orderItem);
+        if(orderItem.getUser() != null){
+            UserDto userDto = mapUserToDtoPlusAddress(orderItem.getUser());
+            orderItemDto.setUser(userDto);
 
+        }
+        return orderItemDto;
+    }
 
+    // User to dto with orderItem and address history
 
+    public UserDto mapUserToDtoPlusAddressAndOrderHistory(User user){
+        UserDto userDto = mapUserToDto(user);
+        if(user.getOrderItemsList()!= null && !user.getOrderItemsList().isEmpty()){
+            userDto.setOrderItemList(user.getOrderItemsList().
+                    stream().
+                    map(this::mapOrderItemToDtoPlusProduct).
+                    collect(Collectors.toList()));
 
-
+        }
+        return userDto;
+    }
 }
